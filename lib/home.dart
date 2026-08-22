@@ -1,0 +1,15 @@
+import 'package:flutter/material.dart';
+
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.lightGreen,
+      body: Center(child: Icon(Icons.park, size: 250, color: Colors.green)),
+    );
+  }
+}
