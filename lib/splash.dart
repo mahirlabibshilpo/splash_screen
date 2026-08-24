@@ -44,15 +44,26 @@ class _SplashState extends State<Splash> {
                       .fadeIn(duration: 800.ms)
                       .scale(duration: 800.ms),
 
-                  SizedBox(height: 20),
-                  Text(
-                    'Together for a Greener Future',
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.green.shade800,
-                    ),
+                  SizedBox(height: 15),
+                  Column(
+                    children: [
+                      Text(
+                        'GO GREEN',
+                        style: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green.shade800,
+                        ),
+                      ),
+                      Text(
+                        'Together for a Greener Future',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.green.shade700,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
