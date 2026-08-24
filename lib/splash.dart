@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'home.dart';
+
+
+
 class Splash extends StatefulWidget {
   const Splash({super.key});
   @override
@@ -35,12 +39,16 @@ class _SplashState extends State<Splash> {
                   Image.asset(
                     'assets/green_environment_logo.png',
                     width: 250,
-                  ),
+                  )
+                      .animate()
+                      .fadeIn(duration: 800.ms)
+                      .scale(duration: 800.ms),
+
                   SizedBox(height: 20),
                   Text(
                     'Together for a Greener Future',
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 26,
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
                       color: Colors.green.shade800,
