@@ -29,7 +29,7 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.tealAccent.shade100,
+      backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -49,19 +49,19 @@ class _SplashState extends State<Splash> {
                   Column(
                     children: [
                       Text(
-                        'GO GREEN',
+                        'QAMPUS',
                         style: TextStyle(
                           fontSize: 35,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green.shade800,
+                          color: Colors.green.shade900,
                         ),
                       ),
                       Text(
-                        'Together for a Greener Future',
+                        'Smart Access, Better Campus',
                         style: TextStyle(
                           fontSize: 22,
                           fontStyle: FontStyle.italic,
-                          color: Colors.green.shade700,
+                          color: Colors.lightGreen.shade700,
                         ),
                       ),
                     ],

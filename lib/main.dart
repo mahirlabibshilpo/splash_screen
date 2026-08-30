@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:splash_screen/splash.dart';
-
+import 'package:qampus/splash.dart';
 void main() {
   runApp(const MyApp());
 }
