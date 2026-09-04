@@ -34,4 +34,22 @@ void main() {
     expect(find.byType(HomePage), findsOneWidget);
     expect(find.text('Campus Services'), findsOneWidget);
   });
+
+  testWidgets('LibraryPage - renders properly and shows seating, status, and books', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: HomePage(),
+      ),
+    );
+
+    // Tap Library service card
+    await tester.tap(find.text('Library'));
+    await tester.pumpAndSettle();
+
+    // Verify Library Services page opens
+    expect(find.text('Library Services'), findsOneWidget);
+    expect(find.text('Available Seats'), findsOneWidget);
+    expect(find.text('Check Book Availability'), findsOneWidget);
+    expect(find.text('Introduction to Algorithms'), findsWidgets);
+  });
 }

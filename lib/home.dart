@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'auth_service.dart';
+import 'library.dart';
 import 'login.dart';
 
 class HomePage extends StatelessWidget {
@@ -167,12 +168,21 @@ class HomePage extends StatelessWidget {
         subtitle: Text(subtitle),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
         onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('$title service selected!'),
-              duration: const Duration(seconds: 1),
-            ),
-          );
+          if (title == 'Library') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LibraryPage(),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('$title service selected!'),
+                duration: const Duration(seconds: 1),
+              ),
+            );
+          }
         },
       ),
     );
