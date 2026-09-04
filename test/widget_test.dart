@@ -1,30 +1,41 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:splash_screen/main.dart';
+import 'package:qampus/main.dart';
+import 'package:qampus/login.dart';
+import 'package:qampus/home.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('App smoke test - verifies MyApp launches and transitions through Splash to LoginPage', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
+    expect(find.text('QAMPUS'), findsOneWidget);
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Fast-forward past the splash screen timer
+    await tester.pumpAndSettle(const Duration(seconds: 4));
+    expect(find.byType(LoginPage), findsOneWidget);
+    expect(find.widgetWithText(ElevatedButton, 'LOGIN'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('LoginPage - validates empty input and authenticates successfully with correct credentials', (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: LoginPage()));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Tap LOGIN button with empty fields
+    await tester.tap(find.widgetWithText(ElevatedButton, 'LOGIN'));
+    await tester.pumpAndSettle();
+
+    // Verify error snackbar appears
+    expect(find.text('Please enter both Email and Password!'), findsOneWidget);
+
+    // Enter valid credentials
+    await tester.enterText(find.byType(TextField).at(0), 'student@qampus.com');
+    await tester.enterText(find.byType(TextField).at(1), '123456');
+    await tester.pumpAndSettle();
+
+    // Tap LOGIN
+    await tester.tap(find.widgetWithText(ElevatedButton, 'LOGIN'));
+    await tester.pumpAndSettle();
+
+    // Verify HomePage is displayed
+    expect(find.byType(HomePage), findsOneWidget);
+    expect(find.text('Campus Services'), findsOneWidget);
   });
 }

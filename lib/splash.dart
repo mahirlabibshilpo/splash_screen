@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'home.dart';
-
-
+import 'login.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
+
   @override
   State<Splash> createState() => _SplashState();
 }
@@ -14,69 +12,70 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    navigatetohome();
+    _navigateToLogin();
   }
 
-  navigatetohome() async {
-    await Future.delayed(Duration(milliseconds: 3500), () {});
+  Future<void> _navigateToLogin() async {
+    // 2 second wait, tarpor Login Page e jabe
+    await Future.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => MyHomePage(title: 'GFG'),
+        builder: (context) => const LoginPage(),
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/green_environment_logo.png',
-                    width: 250,
-                  )
-                      .animate()
-                      .fadeIn(duration: 800.ms)
-                      .scale(duration: 800.ms),
+      backgroundColor: Colors.green.shade900,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // App Icon (image er bodole simple icon diyechi, emulator e frame skip hobe na)
+            const Icon(
+              Icons.school_rounded,
+              size: 80,
+              color: Colors.white,
+            ),
 
-                  SizedBox(height: 15),
-                  Column(
-                    children: [
-                      Text(
-                        'QAMPUS',
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green.shade900,
-                        ),
-                      ),
-                      Text(
-                        'Smart Access, Better Campus',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.lightGreen.shade700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+            const SizedBox(height: 20),
+
+            // App Name
+            const Text(
+              'QAMPUS',
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: 3,
               ),
             ),
-          ),
-          SizedBox(height: 30),
-          CircularProgressIndicator(
-            color: Colors.green,
-          ),
-          SizedBox(height: 30),
-          SizedBox(height: 30),
-        ],
+
+            const SizedBox(height: 8),
+
+            // Tagline
+            Text(
+              'Smart Access, Better Campus',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.green.shade200,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+
+            const SizedBox(height: 50),
+
+            // Loading
+            const CircularProgressIndicator(
+              color: Colors.white,
+              strokeWidth: 2,
+            ),
+          ],
+        ),
       ),
     );
   }

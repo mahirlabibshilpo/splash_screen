@@ -121,7 +121,7 @@ class ForgotPasswordDialog {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        style: ElevatedButton.styleKey.isEmpty ? null : ElevatedButton.styleFrom(
+                        style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF0D3B2E),
                           foregroundColor: Colors.white,
                           elevation: 0,
