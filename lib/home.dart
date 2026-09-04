@@ -39,19 +39,19 @@ class HomePage extends StatelessWidget {
             // Welcome Card (User Profile Header)
             Card(
               color: Colors.green.shade50,
-              elevation: 2,
+              elevation: 10,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: Colors.green.shade200),
+                borderRadius: BorderRadius.circular(100),
+                side: BorderSide(color: Colors.green.shade300),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(22),
                 child: Row(
                   children: [
                     const CircleAvatar(
                       backgroundColor: Colors.green,
-                      radius: 26,
-                      child: Icon(Icons.person, color: Colors.white, size: 30),
+                      radius: 30,
+                      child: Icon(Icons.person, color: Colors.white, size: 35),
                     ),
                     const SizedBox(width: 15),
                     Expanded(
@@ -61,12 +61,12 @@ class HomePage extends StatelessWidget {
                           const Text(
                             'Welcome to QAMPUS!',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                              color: Colors.teal,
                             ),
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 6),
                           Text(
                             userEmail,
                             style: const TextStyle(
@@ -80,7 +80,7 @@ class HomePage extends StatelessWidget {
                             'Smart Access, Better Campus',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Colors.black54,
+                              color: Colors.black45,
                             ),
                           ),
                         ],
@@ -150,15 +150,15 @@ class HomePage extends StatelessWidget {
     String subtitle,
   ) {
     return Card(
-      elevation: 1,
+      elevation: 5,
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: Colors.green.shade100,
-          child: Icon(icon, color: Colors.green),
+          backgroundColor: Colors.lightGreenAccent.shade200,
+          child: Icon(icon, color: Colors.green.shade700),
         ),
         title: Text(
           title,
@@ -192,8 +192,8 @@ class HomePage extends StatelessWidget {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+              backgroundColor: Colors.deepOrange.shade900,
+              foregroundColor: Colors.white38,
             ),
             onPressed: () {
               Navigator.pop(context); // Dialog bondho kore
