@@ -8,20 +8,14 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Current user er email (Login kora na thakle default 'Student')
     String userEmail = AuthService().currentUserEmail ?? 'Student';
 
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
-
-      // ১. Top AppBar (Title & Logout Button)
       appBar: AppBar(
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
-        title: const Text(
-          'QAMPUS - Home',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: const Text('QAMPUS - Home', style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -30,14 +24,11 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-
-      // ২. Main Content (Scrollable Page)
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Welcome Card (User Profile Header)
             Card(
               color: Colors.green.shade50,
               elevation: 10,
@@ -91,96 +82,45 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 25),
-
-            // Section Title
             const Text(
               'Campus Services',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
             ),
-
             const SizedBox(height: 15),
-
-            // Campus Service Items (খুব সহজে একই মেথড কল করা হয়েছে)
-            _buildServiceCard(
-              context,
-              Icons.menu_book,
-              'Library',
-              'Books issue, return & study room access',
-            ),
-            _buildServiceCard(
-              context,
-              Icons.restaurant,
-              'Canteen',
-              'Cafeteria tokens & meal schedule',
-            ),
-            _buildServiceCard(
-              context,
-              Icons.groups,
-              'Club Office',
-              'Student activity & event registration',
-            ),
-            _buildServiceCard(
-              context,
-              Icons.campaign,
-              'Notice Board',
-              'Important university notices & announcements',
-            ),
-            _buildServiceCard(
-              context,
-              Icons.account_balance,
-              'Administrative Office',
-              'Student ID, fees & official documents',
-            ),
+            _buildServiceCard(context, Icons.menu_book, 'Library', 'Books issue, return & study room access'),
+            _buildServiceCard(context, Icons.restaurant, 'Canteen', 'Cafeteria tokens & meal schedule'),
+            _buildServiceCard(context, Icons.groups, 'Club Office', 'Student activity & event registration'),
+            _buildServiceCard(context, Icons.campaign, 'Notice Board', 'Important university notices & announcements'),
+            _buildServiceCard(context, Icons.account_balance, 'Administrative Office', 'Student ID, fees & official documents'),
           ],
         ),
       ),
     );
   }
 
-  // ৩. Service Card বানানোর সহজ Helper মেথড (Sir ke explain kora shohoj)
-  Widget _buildServiceCard(
-    BuildContext context,
-    IconData icon,
-    String title,
-    String subtitle,
-  ) {
+  Widget _buildServiceCard(BuildContext context, IconData icon, String title, String subtitle) {
     return Card(
       elevation: 5,
       margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: Colors.lightGreenAccent.shade200,
           child: Icon(icon, color: Colors.green.shade700),
         ),
-        title: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(subtitle),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
         onTap: () {
           if (title == 'Library') {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => const LibraryPage(),
-              ),
+              MaterialPageRoute(builder: (context) => const LibraryPage()),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('$title service selected!'),
-                duration: const Duration(seconds: 1),
-              ),
+              SnackBar(content: Text('$title service selected!'), duration: const Duration(seconds: 1)),
             );
           }
         },
@@ -188,7 +128,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // ৪. Logout Confirmation Dialog Function
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -196,24 +135,19 @@ class HomePage extends StatelessWidget {
         title: const Text('Logout'),
         content: const Text('Are you sure you want to logout?'),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.deepOrange.shade900,
               foregroundColor: Colors.white38,
             ),
             onPressed: () {
-              Navigator.pop(context); // Dialog bondho kore
-              AuthService().logout(); // Session clear kore
+              Navigator.pop(context);
+              AuthService().logout();
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
-              ); // Login page e niye jay
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
             },
             child: const Text('Logout'),
           ),
