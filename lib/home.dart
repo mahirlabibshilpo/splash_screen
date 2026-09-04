@@ -7,12 +7,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Current logged in user email
+    // Current user er email (Login kora na thakle default 'Student')
     String userEmail = AuthService().currentUserEmail ?? 'Student';
 
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
-      // Top Bar
+
+      // ১. Top AppBar (Title & Logout Button)
       appBar: AppBar(
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
@@ -21,23 +22,21 @@ class HomePage extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
-          // Logout Button
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',
-            onPressed: () {
-              _showLogoutDialog(context);
-            },
+            onPressed: () => _showLogoutDialog(context),
           ),
         ],
       ),
-      // Page Body
+
+      // ২. Main Content (Scrollable Page)
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Welcome Card with User Email
+            // Welcome Card (User Profile Header)
             Card(
               color: Colors.green.shade50,
               elevation: 2,
@@ -49,10 +48,10 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       backgroundColor: Colors.green,
                       radius: 26,
-                      child: const Icon(Icons.person, color: Colors.white, size: 30),
+                      child: Icon(Icons.person, color: Colors.white, size: 30),
                     ),
                     const SizedBox(width: 15),
                     Expanded(
@@ -94,7 +93,7 @@ class HomePage extends StatelessWidget {
 
             const SizedBox(height: 25),
 
-            // 2. Section Header
+            // Section Title
             const Text(
               'Campus Services',
               style: TextStyle(
@@ -106,36 +105,36 @@ class HomePage extends StatelessWidget {
 
             const SizedBox(height: 15),
 
-            // 3. Simple Service Tiles
+            // Campus Service Items (খুব সহজে একই মেথড কল করা হয়েছে)
             _buildServiceCard(
-              context: context,
-              icon: Icons.menu_book,
-              title: 'Library',
-              subtitle: 'Books issue, return & study room access',
+              context,
+              Icons.menu_book,
+              'Library',
+              'Books issue, return & study room access',
             ),
             _buildServiceCard(
-              context: context,
-              icon: Icons.restaurant,
-              title: 'Canteen',
-              subtitle: 'Cafeteria tokens & meal schedule',
+              context,
+              Icons.restaurant,
+              'Canteen',
+              'Cafeteria tokens & meal schedule',
             ),
             _buildServiceCard(
-              context: context,
-              icon: Icons.groups,
-              title: 'Club Office',
-              subtitle: 'Student activity & event registration',
+              context,
+              Icons.groups,
+              'Club Office',
+              'Student activity & event registration',
             ),
             _buildServiceCard(
-              context: context,
-              icon: Icons.campaign,
-              title: 'Notice Board',
-              subtitle: 'Important university notices & announcements',
+              context,
+              Icons.campaign,
+              'Notice Board',
+              'Important university notices & announcements',
             ),
             _buildServiceCard(
-              context: context,
-              icon: Icons.account_balance,
-              title: 'Administrative Office',
-              subtitle: 'Student ID, fees & official documents',
+              context,
+              Icons.account_balance,
+              'Administrative Office',
+              'Student ID, fees & official documents',
             ),
           ],
         ),
@@ -143,13 +142,13 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Simple Helper for Service Cards
-  Widget _buildServiceCard({
-    required BuildContext context,
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
+  // ৩. Service Card বানানোর সহজ Helper মেথড (Sir ke explain kora shohoj)
+  Widget _buildServiceCard(
+    BuildContext context,
+    IconData icon,
+    String title,
+    String subtitle,
+  ) {
     return Card(
       elevation: 1,
       margin: const EdgeInsets.only(bottom: 12),
@@ -179,7 +178,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Logout confirmation dialog
+  // ৪. Logout Confirmation Dialog Function
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -197,16 +196,14 @@ class HomePage extends StatelessWidget {
               foregroundColor: Colors.white,
             ),
             onPressed: () {
-              Navigator.pop(context);
-
-              AuthService().logout();
-
+              Navigator.pop(context); // Dialog bondho kore
+              AuthService().logout(); // Session clear kore
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const LoginPage(),
                 ),
-              );
+              ); // Login page e niye jay
             },
             child: const Text('Logout'),
           ),
