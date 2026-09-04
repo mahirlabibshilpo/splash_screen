@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'auth_service.dart';
 import 'home.dart';
 import 'signup.dart';
@@ -12,19 +11,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // Email ar Password controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  // Password hide/show state
   bool isPasswordHidden = true;
 
-  // Login function
   void loginUser() {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
-    // 1. Check if fields are empty
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -35,7 +30,6 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    // 2. Check credentials using AuthService
     bool isSuccess = AuthService().login(email, password);
 
     if (isSuccess) {
@@ -46,7 +40,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
 
-      // Navigate to Home Page
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -57,9 +50,6 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Invalid email or password.'),
-          backgroundColor: Colors.red,
-        ),
-      );
           backgroundColor: Colors.red,
         ),
       );
@@ -83,12 +73,15 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Logo
               Image.asset(
                 'assets/green_environment_logo.png',
                 height: 90,
               ),
 
+              const SizedBox(height: 20),
+
+              const Text(
+                'LOGIN',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -99,29 +92,26 @@ class _LoginPageState extends State<LoginPage> {
 
               const SizedBox(height: 30),
 
-              // Email Field
               TextField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   hintText: 'student@qampus.com',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.email, color: Colors.green),
                 ),
+              ),
+
+              const SizedBox(height: 15),
+
               TextField(
                 controller: passwordController,
                 obscureText: isPasswordHidden,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                decoration: InputDecoration(
-                  labelText: 'Password',
                   hintText: '123456',
                   border: const OutlineInputBorder(),
-                  prefixIcon: const Icon(Icons.lock, color: Colors.green),
-                  suffixIcon: IconButton(
                   prefixIcon: const Icon(Icons.lock, color: Colors.green),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -139,7 +129,6 @@ class _LoginPageState extends State<LoginPage> {
 
               const SizedBox(height: 10),
 
-              // Forgot Password
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -159,7 +148,6 @@ class _LoginPageState extends State<LoginPage> {
 
               const SizedBox(height: 15),
 
-              // Login Button
               SizedBox(
                 width: double.infinity,
                 height: 48,
@@ -181,10 +169,8 @@ class _LoginPageState extends State<LoginPage> {
 
               const SizedBox(height: 20),
 
-              // Sign Up Option
               GestureDetector(
                 onTap: () {
-                  // Navigate to Sign Up Page
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -206,23 +192,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              // Demo Info Helper
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.green.shade50,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.green.shade200),
-                ),
-                child: const Text(
-                  'Demo Login:\nEmail: student@qampus.com\nPassword: 123456',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.green, fontSize: 13),
-                ),
-              ),
                 ),
               ),
             ],

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'auth_service.dart';
-import 'login.dart';
 import 'login.dart';
 
 class HomePage extends StatelessWidget {
@@ -45,6 +43,8 @@ class HomePage extends StatelessWidget {
               elevation: 2,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
+                side: BorderSide(color: Colors.green.shade200),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -89,9 +89,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                    ),
-                  ],
-                ),
               ),
             ),
 
@@ -128,11 +125,6 @@ class HomePage extends StatelessWidget {
               title: 'Club Office',
               subtitle: 'Student activity & event registration',
             ),
-              context: context,
-              icon: Icons.groups,
-              title: 'Club Office',
-              subtitle: 'Student activity & event registration',
-            ),
             _buildServiceCard(
               context: context,
               icon: Icons.campaign,
@@ -144,7 +136,6 @@ class HomePage extends StatelessWidget {
               icon: Icons.account_balance,
               title: 'Administrative Office',
               subtitle: 'Student ID, fees & official documents',
-            ),
             ),
           ],
         ),
@@ -187,6 +178,7 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
   // Logout confirmation dialog
   void _showLogoutDialog(BuildContext context) {
     showDialog(

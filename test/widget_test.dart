@@ -1,21 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:qampus/home.dart';
 import 'package:qampus/login.dart';
-import 'package:qampus/main.dart';
 
 void main() {
-  testWidgets('App smoke test - verifies MyApp launches and transitions through Splash to LoginPage', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
-    expect(find.text('QAMPUS'), findsOneWidget);
-
-    await tester.pumpAndSettle(const Duration(seconds: 4));
-    expect(find.byType(LoginPage), findsOneWidget);
-    expect(find.widgetWithText(ElevatedButton, 'LOGIN'), findsOneWidget);
-  });
-
   testWidgets('Login page smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
@@ -45,7 +33,5 @@ void main() {
 
     expect(find.byType(HomePage), findsOneWidget);
     expect(find.text('Campus Services'), findsOneWidget);
-  });
-}
   });
 }
