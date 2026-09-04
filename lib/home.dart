@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'auth_service.dart';
+import 'login.dart';
 import 'login.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,6 +14,7 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
+      // Top Bar
       appBar: AppBar(
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
@@ -30,6 +33,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+      // Page Body
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -41,8 +45,6 @@ class HomePage extends StatelessWidget {
               elevation: 2,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: Colors.green.shade200),
-              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -74,8 +76,19 @@ class HomePage extends StatelessWidget {
                               color: Colors.black87,
                             ),
                           ),
+                          const SizedBox(height: 2),
+                          const Text(
+                            'Smart Access, Better Campus',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
+                            ),
+                          ),
                         ],
                       ),
+                    ),
+                  ],
+                ),
                     ),
                   ],
                 ),
@@ -115,11 +128,23 @@ class HomePage extends StatelessWidget {
               title: 'Club Office',
               subtitle: 'Student activity & event registration',
             ),
+              context: context,
+              icon: Icons.groups,
+              title: 'Club Office',
+              subtitle: 'Student activity & event registration',
+            ),
             _buildServiceCard(
               context: context,
               icon: Icons.campaign,
               title: 'Notice Board',
               subtitle: 'Important university notices & announcements',
+            ),
+            _buildServiceCard(
+              context: context,
+              icon: Icons.account_balance,
+              title: 'Administrative Office',
+              subtitle: 'Student ID, fees & official documents',
+            ),
             ),
           ],
         ),
@@ -137,7 +162,9 @@ class HomePage extends StatelessWidget {
     return Card(
       elevation: 1,
       margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: Colors.green.shade100,
@@ -152,7 +179,7 @@ class HomePage extends StatelessWidget {
         onTap: () {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('$title service clicked!'),
+              content: Text('$title service selected!'),
               duration: const Duration(seconds: 1),
             ),
           );
@@ -160,7 +187,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
   // Logout confirmation dialog
   void _showLogoutDialog(BuildContext context) {
     showDialog(
@@ -179,12 +205,10 @@ class HomePage extends StatelessWidget {
               foregroundColor: Colors.white,
             ),
             onPressed: () {
-              Navigator.pop(context); // Close dialog
+              Navigator.pop(context);
 
-              // 1. Clear session
               AuthService().logout();
 
-              // 2. Navigate back to Login Page
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(

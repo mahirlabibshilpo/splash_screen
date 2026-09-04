@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'auth_service.dart';
 import 'home.dart';
 import 'signup.dart';
@@ -23,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
-    // 1. Check if empty
+    // 1. Check if fields are empty
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -59,6 +60,9 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.red,
         ),
       );
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -85,15 +89,11 @@ class _LoginPageState extends State<LoginPage> {
                 height: 90,
               ),
 
-              const SizedBox(height: 30),
-
-              // Login Title
-              const Text(
-                'LOGIN',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.green,
+                  letterSpacing: 1.5,
                 ),
               ),
 
@@ -105,20 +105,23 @@ class _LoginPageState extends State<LoginPage> {
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   labelText: 'Email',
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  hintText: 'student@qampus.com',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.email, color: Colors.green),
                 ),
-              ),
-
-              const SizedBox(height: 15),
-
-              // Password Field
               TextField(
                 controller: passwordController,
                 obscureText: isPasswordHidden,
                 decoration: InputDecoration(
                   labelText: 'Password',
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  hintText: '123456',
                   border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.lock, color: Colors.green),
+                  suffixIcon: IconButton(
                   prefixIcon: const Icon(Icons.lock, color: Colors.green),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -133,6 +136,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+
+              const SizedBox(height: 10),
 
               // Forgot Password
               Align(
@@ -201,6 +206,23 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Demo Info Helper
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.green.shade50,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.green.shade200),
+                ),
+                child: const Text(
+                  'Demo Login:\nEmail: student@qampus.com\nPassword: 123456',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.green, fontSize: 13),
+                ),
+              ),
                 ),
               ),
             ],

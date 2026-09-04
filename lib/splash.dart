@@ -4,6 +4,7 @@ import 'login.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
+
   @override
   State<Splash> createState() => _SplashState();
 }
@@ -14,10 +15,11 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
+    _navigateToLogin();
   }
 
-  void _goToHome() {
+  Future<void> _navigateToLogin() async {
+    await Future.delayed(const Duration(milliseconds: 1800));
     if (_navigated || !mounted) return;
     _navigated = true;
     Navigator.pushReplacement(
@@ -28,18 +30,22 @@ class _SplashState extends State<Splash> {
     );
   }
 
-  Future<void> _navigateToHome() async {
-    await Future.delayed(const Duration(milliseconds: 1800));
-    _goToHome();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: _goToHome, // Screen e tap korle direct login e chole jabe
+        onTap: () {
+          if (_navigated) return;
+          _navigated = true;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginPage(),
+            ),
+          );
+        },
         child: Column(
           children: <Widget>[
             Expanded(
@@ -54,7 +60,6 @@ class _SplashState extends State<Splash> {
                         .animate()
                         .fadeIn(duration: 600.ms)
                         .scale(duration: 600.ms),
-
                     const SizedBox(height: 15),
                     Column(
                       children: [
@@ -90,4 +95,4 @@ class _SplashState extends State<Splash> {
       ),
     );
   }
-}
+}
