@@ -88,18 +88,53 @@ class HomePage extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
             ),
             const SizedBox(height: 15),
-            _buildServiceCard(context, Icons.menu_book, 'Library', 'Books issue, return & study room access'),
-            _buildServiceCard(context, Icons.restaurant, 'Canteen', 'Cafeteria tokens & meal schedule'),
-            _buildServiceCard(context, Icons.groups, 'Club Office', 'Student activity & event registration'),
-            _buildServiceCard(context, Icons.campaign, 'Notice Board', 'Important university notices & announcements'),
-            _buildServiceCard(context, Icons.account_balance, 'Administrative Office', 'Student ID, fees & official documents'),
+            _buildServiceCard(
+              icon: Icons.menu_book,
+              title: 'Library',
+              subtitle: 'Books issue, return & study room access',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LibraryPage()),
+                );
+              },
+            ),
+            _buildServiceCard(
+              icon: Icons.restaurant,
+              title: 'Canteen',
+              subtitle: 'Cafeteria tokens & meal schedule',
+              onTap: () => _showComingSoon(context, 'Canteen'),
+            ),
+            _buildServiceCard(
+              icon: Icons.groups,
+              title: 'Club Office',
+              subtitle: 'Student activity & event registration',
+              onTap: () => _showComingSoon(context, 'Club Office'),
+            ),
+            _buildServiceCard(
+              icon: Icons.campaign,
+              title: 'Notice Board',
+              subtitle: 'Important university notices & announcements',
+              onTap: () => _showComingSoon(context, 'Notice Board'),
+            ),
+            _buildServiceCard(
+              icon: Icons.account_balance,
+              title: 'Administrative Office',
+              subtitle: 'Student ID, fees & official documents',
+              onTap: () => _showComingSoon(context, 'Administrative Office'),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildServiceCard(BuildContext context, IconData icon, String title, String subtitle) {
+  Widget _buildServiceCard({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
     return Card(
       elevation: 5,
       margin: const EdgeInsets.only(bottom: 12),
@@ -112,19 +147,14 @@ class HomePage extends StatelessWidget {
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(subtitle),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-        onTap: () {
-          if (title == 'Library') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const LibraryPage()),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('$title service selected!'), duration: const Duration(seconds: 1)),
-            );
-          }
-        },
+        onTap: onTap,
       ),
+    );
+  }
+
+  void _showComingSoon(BuildContext context, String service) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('$service service selected!'), duration: const Duration(seconds: 1)),
     );
   }
 
