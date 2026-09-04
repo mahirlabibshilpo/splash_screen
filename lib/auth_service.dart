@@ -9,7 +9,8 @@ class AuthService {
 
   // Temporary local user store: Email -> Password
   final Map<String, String> _users = {
-    // Default demo user so login test kora jay sorasori
+    // Permanent testing account (jekono somoi login kora jabe)
+    'aust@gmail.com': '123456',
     'student@qampus.com': '123456',
   };
 
