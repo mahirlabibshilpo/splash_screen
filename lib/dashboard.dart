@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'auth_service.dart';
+import 'canteen.dart';
 import 'library.dart';
 import 'login.dart';
 
@@ -454,6 +455,20 @@ class _DashboardPageState extends State<DashboardPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => const LibraryPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  _buildCard(
+                    icon: Icons.restaurant,
+                    color: Colors.teal,
+                    title: 'Canteen',
+                    subtitle: 'Tokens & menu',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CanteenPage(),
                         ),
                       );
                     },
