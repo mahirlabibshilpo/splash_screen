@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'auth_service.dart';
 import 'library.dart';
 import 'login.dart';
@@ -8,7 +9,14 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String userEmail = AuthService().currentUserEmail ?? 'Student';
+    String userEmail = 'Student';
+    try {
+      userEmail = FirebaseAuth.instance.currentUser?.email ??
+          AuthService().currentUserEmail ??
+          'Student';
+    } catch (_) {
+      userEmail = AuthService().currentUserEmail ?? 'Student';
+    }
 
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
@@ -169,20 +177,36 @@ class HomePage extends StatelessWidget {
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.deepOrange.shade900,
-              foregroundColor: Colors.white38,
+              foregroundColor: Colors.white,
             ),
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
+              try {
+                await FirebaseAuth.instance.signOut();
+              } catch (_) {}
               AuthService().logout();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-              );
+              if (context.mounted) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              }
             },
             child: const Text('Logout'),
           ),
         ],
       ),
     );
+  }
+}
+
+// Alias for backwards compatibility if referenced elsewhere
+class MyHomePage extends StatelessWidget {
+  final String title;
+  const MyHomePage({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return const HomePage();
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1011152793806",
+    "project_id": "qampus-60056",
+    "storage_bucket": "qampus-60056.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011152793806:android:45df892c027728e363e09f",
+        "android_client_info": {
+          "package_name": "com.example.splash_screen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQXAHqD7BOw4CC7lkU6p6hhjxVJY2R8Uc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

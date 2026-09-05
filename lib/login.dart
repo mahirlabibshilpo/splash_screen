@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'auth_service.dart';
 import 'home.dart';
 import 'signup.dart';
@@ -16,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool isPasswordHidden = true;
 
-  void loginUser() {
+  void loginUser() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
@@ -30,9 +31,14 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    bool isSuccess = AuthService().login(email, password);
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      AuthService().login(email, password);
 
-    if (isSuccess) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Login Successful!'),
@@ -46,13 +52,33 @@ class _LoginPageState extends State<LoginPage> {
           builder: (context) => const HomePage(),
         ),
       );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Invalid email or password.'),
-          backgroundColor: Colors.red,
-        ),
-      );
+    } catch (e) {
+      // Fallback to local AuthService if Firebase Auth fails or is offline
+      bool isSuccess = AuthService().login(email, password);
+
+      if (!mounted) return;
+      if (isSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Login Successful!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Invalid email or password.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 

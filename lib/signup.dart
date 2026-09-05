@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'auth_service.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -7,6 +8,8 @@ class SignUpPage extends StatefulWidget {
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
+
+typedef SignUp = SignUpPage;
 
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController emailController = TextEditingController();
@@ -17,7 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   bool isConfirmPasswordHidden = true;
 
   // Account creation function
-  void createAccount() {
+  void createAccount() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
     String confirmPassword = confirmPasswordController.text.trim();
@@ -66,10 +69,15 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    // 5. Register account in AuthService
-    bool isSuccess = AuthService().signUp(email, password);
+    // 5. Register account in Firebase Auth & AuthService fallback
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      AuthService().signUp(email, password);
 
-    if (isSuccess) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Account created successfully! Please login.'),
@@ -77,15 +85,27 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       );
 
-      // Return user to Login Page
       Navigator.pop(context);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('An account with this email already exists!'),
-          backgroundColor: Colors.red,
-        ),
-      );
+    } catch (e) {
+      // Fallback to local AuthService if Firebase Auth fails or is offline
+      bool isSuccess = AuthService().signUp(email, password);
+      if (!mounted) return;
+      if (isSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Account created successfully! Please login.'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pop(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Could not create account: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
