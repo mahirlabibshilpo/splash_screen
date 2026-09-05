@@ -52,4 +52,48 @@ void main() {
     expect(find.text('Check Book Availability'), findsOneWidget);
     expect(find.text('Introduction to Algorithms'), findsWidgets);
   });
+
+  testWidgets('CanteenPage - navigation, queue status, active token, cancel and get token', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: HomePage(),
+      ),
+    );
+
+    // Tap Canteen service card from HomePage
+    await tester.tap(find.text('Canteen'));
+    await tester.pumpAndSettle();
+
+    // Verify Canteen Services page opens
+    expect(find.text('Canteen Services'), findsOneWidget);
+    expect(find.text('CAMPUS CANTEEN'), findsOneWidget);
+    expect(find.text('Live Queue Status'), findsOneWidget);
+    expect(find.text('7 in Queue'), findsOneWidget);
+    expect(find.textContaining('CANTEEN C'), findsWidgets);
+    expect(find.text('Menu Items & Orders'), findsOneWidget);
+
+    // Verify active token details
+    expect(find.text('TOKEN #C-042'), findsOneWidget);
+    expect(find.text('Item: Chicken Biryani Platter'), findsOneWidget);
+    expect(find.text('People Ahead: 7  |  Est. Wait: 14 mins'), findsOneWidget);
+
+    // Test Cancel Token dialog
+    await tester.tap(find.text('Cancel Token'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Are you sure you want to cancel your queue token?'), findsOneWidget);
+    await tester.tap(find.text('Yes, Cancel'));
+    await tester.pumpAndSettle();
+
+    // Verify token is cancelled
+    expect(find.text('No active token. Tap "Get Token" on any menu item below to join queue.'), findsOneWidget);
+
+    // Test Get Token on available item
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Get Token').first);
+    await tester.pumpAndSettle();
+
+    // Verify new token is generated
+    expect(find.text('TOKEN #C-043'), findsOneWidget);
+  });
 }
+

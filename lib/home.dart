@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'auth_service.dart';
+import 'canteen.dart';
 import 'library.dart';
 import 'login.dart';
 
@@ -103,7 +104,12 @@ class HomePage extends StatelessWidget {
               icon: Icons.restaurant,
               title: 'Canteen',
               subtitle: 'Cafeteria tokens & meal schedule',
-              onTap: () => _showComingSoon(context, 'Canteen'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CanteenPage()),
+                );
+              },
             ),
             _buildServiceCard(
               icon: Icons.groups,
